@@ -1,0 +1,3 @@
+CREATE DATABASE sm_proj;
+CREATE USER sm_user WITH PASSWORD 'smproj';
+GRANT ALL PRIVILEGES ON DATABASE sm_proj TO sm_user;
