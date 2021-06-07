@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from .models import User, Post, Reaction, Comment
+from .models import UserTest, Post, Reaction, Comment
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserTestSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ("email", "username", "password", "posts", "reactions", "comments")
+        model = UserTest
+        fields = ("email", "username", "password")
 
 
 class PostSerializer(serializers.ModelSerializer):

@@ -1,31 +1,30 @@
-from django.db.models import query
-from rest_framework import viewsets
-from rest_framework.serializers import ModelSerializer
+from rest_framework.viewsets import ModelViewSet
 
-from .models import User, Post, Reaction, Comment
+from .models import UserTest, Post, Reaction, Comment
+
 from .serializers import (
-    UserSerializer,
+    UserTestSerializer,
     PostSerializer,
     ReactionSerializer,
     CommentSerializer,
 )
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class UserTestViewSet(ModelViewSet):
+    queryset = UserTest.objects.all()
+    serializer_class = UserTestSerializer
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
-class ReactionViewSet(viewsets.ModelViewSet):
+class ReactionViewSet(ModelViewSet):
     queryset = Reaction.objects.all()
     serializer_class = ReactionSerializer
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
-    serializer_class = ModelSerializer
+    serializer_class = CommentSerializer

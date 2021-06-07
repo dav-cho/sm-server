@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from .models import User, Post, Reaction, Comment
+from .models import UserTest, Post, Reaction, Comment
 
 
-class UserAdmin(admin.ModelAdmin):
+class UserTestAdmin(admin.ModelAdmin):
     list_display = ("username", "email", "password")
     list_filter = ("posts", "reactions", "comments")
 
@@ -23,7 +24,7 @@ class CommentAdmin(admin.ModelAdmin):
     filter_display = ("author", "posts")
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(UserTest, UserTestAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Reaction, ReactionAdmin)
 admin.site.register(Comment, CommentAdmin)
