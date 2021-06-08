@@ -1,23 +1,28 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import User
 
 
-class UserAdmin(UserAdmin):
+class UserAdmin(BaseUserAdmin):
     list_display = (
+        "id",
         "email",
         "username",
-        "date_joined",
         "last_login",
+        "date_joined",
         "is_admin",
-        "is_staff",
         "is_superuser",
+        "is_staff",
+        "is_active",
+    )
+    # list_filter = ("email", "username")
+    fieldsets = (
+        (None, {"fields": ("email", "username", "password")}),
+        ("Permissions", {"fields": ("is_admin", "is_superuser", "is_staff")}),
     )
     search_fields = ("email", "username")
-    readonly_fields = ("id", "date_joined", "last_login")
-    # list_filter = ("posts", "reactions", "comments")
-    list_filter = ()
+    ordering = ("email",)
     filter_horizontal = ()
 
 

@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,python,django,visualstudiocode
 
 .env
+settings.sql
 
 ### Django ###
 *.log

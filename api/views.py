@@ -1,3 +1,23 @@
-from django.shortcuts import render
+from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-# Create your views here.
+from .models import Post, Comment, Reaction
+from .serializers import PostSerializer, CommentSerializer, ReactionSerializer
+from .permissions import (
+    PostUserPermission,
+    CommentUserPermission,
+    ReactionUserPermission,
+)
+
+
+class PostList(ListCreateAPIView):
+    permission_classes = [DjangoModelPermissions]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostDetail(RetrieveUpdateDestroyAPIView, PostUserPermission):
+    permission_classes = [PostUserPermission]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

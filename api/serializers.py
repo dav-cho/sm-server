@@ -1,27 +1,26 @@
+from django.db.models.query import QuerySet
 from rest_framework import serializers
 
-from .models import UserTest, Post, Reaction, Comment
-
-
-class UserTestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserTest
-        fields = ("email", "username", "password")
+from accounts.models import User
+from .models import Post, Comment, Reaction
 
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ("title", "author", "body", "reactions", "comments")
+        fields = ("id", "title", "author", "published", "body", "reactions", "comments")
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+    author_id = serializers.StringRelatedField()
+
+    class Meta:
+        model = Comment
+        fields = ("id", "post", "published", "title", "body", "author", "author_id")
 
 
 class ReactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reaction
-        fields = ("post", "author", "type")
-
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = ("post", "author", "title", "body")
+        fields = ("id", "post", "author", "published", "type")
