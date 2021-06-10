@@ -1,44 +1,35 @@
-from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken
+
+from accounts.models import User
+from .serializers import RegisterUserSerializer
 
 
-class Login(APIView):
+class RegisterUser(CreateAPIView):
     permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = RegisterUserSerializer
 
-    def post(self, req):
-        email = req.data["email"]
-        password = req.data["password"]
-        user = authenticate(req, email=email, password=password)
-        if user is None:
-            raise AuthenticationFailed("User not found.")
-        if not user.check_password(password):
-            raise AuthenticationFailed("Incorrect Password")
-        login(req, user)
-        return Response("Successfully logged in.")
+
+class Login(TokenObtainPairView):
+    permission_classes = [AllowAny]
+    serializer_class = TokenObtainPairSerializer
 
 
 class Logout(APIView):
     permission_classes = [AllowAny]
 
     def post(self, req):
-        logout(req)
-        return Response("Successfully logged out.")
-
-
-class BlacklistRefreshToken(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = ()
-
-    def post(self, request):
         try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+            refresh_token = req.data["refresh"]
+            refresh_token = RefreshToken(refresh_token)
+            refresh_token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
