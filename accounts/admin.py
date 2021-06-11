@@ -10,7 +10,7 @@ class UserAdmin(BaseUserAdmin):
         "email",
         "username",
         "last_login",
-        "date_joined",
+        "created",
         "is_admin",
         "is_superuser",
         "is_staff",

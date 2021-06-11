@@ -21,3 +21,15 @@ class PostDetail(RetrieveUpdateDestroyAPIView, PostUserPermission):
     permission_classes = [PostUserPermission]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class CommentList(ListCreateAPIView):
+    permission_classes = [DjangoModelPermissions]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class ReactionList(ListCreateAPIView):
+    permission_classes = [DjangoModelPermissions]
+    queryset = Reaction.objects.all()
+    serializer_class = ReactionSerializer

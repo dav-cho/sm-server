@@ -35,7 +35,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True, verbose_name="email")
     username = models.CharField(max_length=255, unique=True)
-    date_joined = models.DateTimeField(auto_now=True, verbose_name="date joined")
+    created = models.DateTimeField(auto_now=True, verbose_name="date joined")
     last_login = models.DateTimeField(auto_now=True, verbose_name="last login")
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
