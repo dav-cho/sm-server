@@ -7,10 +7,17 @@ from .serializers import (
     CommentSerializer,
     ReactionSerializer,
 )
+from .permissions import (
+    PostPermission,
+    PostUserPermission,
+    CommentUserPermission,
+    ReactionUserPermission,
+)
 
 
 class PostViewSet(ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [PostPermission]
+    # permission_classes = [AllowAny]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 

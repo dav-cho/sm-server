@@ -4,6 +4,15 @@ from .models import Post, Comment, Reaction
 from .serializers import PostSerializer, CommentSerializer, ReactionSerializer
 
 
+class PostPermission(BasePermission):
+    message = "Base Post Permission"
+
+    def has_object_permission(self, req, view, obj):
+        if req.method in SAFE_METHODS:
+            return True
+        return obj.author == req.user
+
+
 class PostUserPermission(BasePermission):
     message = "Only the owner can edit this post."
 

@@ -6,9 +6,21 @@ from .models import Post, Comment, Reaction
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+    author_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    # comments = serializers.StringRelatedField(many=True)
     class Meta:
         model = Post
-        fields = ("id", "title", "author", "published", "body", "reactions", "comments")
+        fields = (
+            "id",
+            "title",
+            "author",
+            "author_id",
+            "published",
+            "body",
+            "reactions",
+            "comments",
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):

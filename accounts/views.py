@@ -40,14 +40,18 @@ class GetUserDetailsView(APIView):
         user = JWTAuthentication.get_user(self, validated_token=token)
 
         # TODO: serialize user object with user serializer?
-        user_data = {
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "last_login": user.last_login,
-            "created": user.created,
-            # "posts": user.posts,
-            # "comments": user.comments,
-            # "reactions": user.reactions,
-        }
-        return Response(user_data)
+        serializer = UserSerializer(data=user)
+        serializer.is_valid()
+        return Response(serializer.validated_data)
+
+        # user_data = {
+        #     "id": user.id,
+        #     "email": user.email,
+        #     "username": user.username,
+        #     "last_login": user.last_login,
+        #     "created": user.created,
+        #     "posts": user.posts,
+        #     # "comments": user.comments,
+        #     # "reactions": user.reactions,
+        # }
+        # return Response(user_data)
