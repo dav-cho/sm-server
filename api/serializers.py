@@ -1,5 +1,4 @@
 from django.conf import settings
-from rest_framework import serializers
 from rest_framework.serializers import (
     ModelSerializer,
     StringRelatedField,
@@ -7,8 +6,8 @@ from rest_framework.serializers import (
     PrimaryKeyRelatedField,
 )
 
-from .models import Post, Comment, Reaction
 from accounts.models import User
+from .models import Post, Comment, Reaction
 
 
 class ReactionSerializer(ModelSerializer):
@@ -18,12 +17,22 @@ class ReactionSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
-    author = PrimaryKeyRelatedField(read_only=True)
+    # author = PrimaryKeyRelatedField(read_only=True)
+    # author_username = SlugRelatedField(read_only=True)
+    author = SlugRelatedField(queryset=User.objects.all(), slug_field="username")
     author_id = PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ("post", "id", "title", "body", "published", "author", "author_id")
+        fields = (
+            "post",
+            "id",
+            "title",
+            "body",
+            "published",
+            "author_id",
+            "author",
+        )
 
 
 class PostSerializer(ModelSerializer):

@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
-# from django.conf.global_settings import AUTH_USER_MODEL
-
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -11,6 +9,7 @@ class Post(models.Model):
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        # "auth.User",
         on_delete=models.CASCADE,
         # null=True,
         related_name="posts",
@@ -18,9 +17,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-    # def has_perm(self, perm, obj=None):
-    #     return self.author ===
 
 
 class Comment(models.Model):
@@ -34,7 +30,9 @@ class Comment(models.Model):
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        # "auth.User",
         on_delete=models.CASCADE,
+        # null=True,
         related_name="comments",
     )
 
@@ -52,7 +50,9 @@ class Reaction(models.Model):
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        # "auth.User",
         on_delete=models.CASCADE,
+        # null=True,
         related_name="reactions",
     )
 

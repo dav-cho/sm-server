@@ -13,6 +13,7 @@ from .serializers import (
     ReactionSerializer,
 )
 from .permissions import (
+    IsOwnerOrReadOnly,
     PostPermission,
     PostUserPermission,
     CommentUserPermission,
@@ -21,7 +22,7 @@ from .permissions import (
 
 
 class PostViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     # permission_classes = [IsAuthenticatedOrReadOnly]
     # permission_classes = [AllowAny]
     queryset = Post.objects.all()
