@@ -2,17 +2,25 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+# from django.conf.global_settings import AUTH_USER_MODEL
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="posts"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        # null=True,
+        related_name="posts",
     )
 
     def __str__(self):
         return self.title
+
+    # def has_perm(self, perm, obj=None):
+    #     return self.author ===
 
 
 class Comment(models.Model):
@@ -20,12 +28,13 @@ class Comment(models.Model):
     body = models.TextField(max_length=1000)
     published = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, null=True, related_name="comments"
+        Post,
+        on_delete=models.CASCADE,
+        related_name="comments",
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        null=True,
         related_name="comments",
     )
 
@@ -37,12 +46,13 @@ class Reaction(models.Model):
     type = models.CharField(max_length=50)
     published = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, null=True, related_name="reactions"
+        Post,
+        on_delete=models.CASCADE,
+        related_name="reactions",
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        null=True,
         related_name="reactions",
     )
 

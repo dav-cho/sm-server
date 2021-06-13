@@ -1,5 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Post, Reaction, Comment
 from .serializers import (
@@ -16,10 +21,12 @@ from .permissions import (
 
 
 class PostViewSet(ModelViewSet):
-    permission_classes = [PostPermission]
+    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     # permission_classes = [AllowAny]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    # authentication_classes = [JWTAuthentication]
 
 
 class CommentViewSet(ModelViewSet):

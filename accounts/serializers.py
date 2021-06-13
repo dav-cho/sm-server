@@ -1,16 +1,13 @@
 from rest_framework import serializers
 
-from rest_framework_simplejwt.tokens import Token
-
 from .models import User
-from api.serializers import PostSerializer, CommentSerializer
+from api.serializers import PostSerializer, CommentSerializer, ReactionSerializer
 
 
-# class UserSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
-    # posts = serializers.StringRelatedField(many=True)
     posts = PostSerializer(many=True)
     comments = CommentSerializer(many=True)
+    reactions = ReactionSerializer(many=True)
 
     class Meta:
         model = User
@@ -26,3 +23,13 @@ class UserSerializer(serializers.ModelSerializer):
             "reactions",
         ]
         extra_kwargs = {"password": {"write_only": True}}
+
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    posts = PostSerializer(many=True)
+    comments = CommentSerializer(many=True)
+    reactions = ReactionSerializer(many=True)
+
+    class Meta:
+        model = User
+        exclude = ["password", "is_admin", "is_superuser", "is_staff"]

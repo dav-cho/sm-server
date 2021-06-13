@@ -20,6 +20,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ("email", "username", "password")}),
         ("Permissions", {"fields": ("is_admin", "is_superuser", "is_staff")}),
+        ("Groups", {"fields": ("groups",)}),
     )
     search_fields = ("email", "username")
     ordering = ("email",)

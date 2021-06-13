@@ -1,21 +1,17 @@
-from rest_framework import permissions
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
-from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt import serializers
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 
 from accounts.models import User
-
 from .serializers import (
     RegisterUserSerializer,
     LoginUserSerializer,
 )
-
-from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 
 
 class RegisterUserView(CreateAPIView):
@@ -27,8 +23,6 @@ class RegisterUserView(CreateAPIView):
 class LoginUserView(TokenObtainPairView):
     permission_classes = [AllowAny]
     serializer_class = LoginUserSerializer
-    # TODO: add GetUserDetail logic from account views
-    # - send back user info on login
 
     def post(self, req, *args, **kwargs):
         serializer = self.get_serializer(data=req.data)
@@ -52,6 +46,8 @@ class LogoutUserView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 class ChangeUserPasswordView(APIView):
