@@ -11,6 +11,9 @@ django-cors-headers = "*"
 python-dotenv = "*"
 bcrypt = "*"
 djangorestframework-simplejwt = "*"
+whitenoise = "*"
+dj-database-url = "*"
+gunicorn = "*"
 
 [dev-packages]
 black = "*"

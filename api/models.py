@@ -10,9 +10,7 @@ class Post(models.Model):
     updated = models.DateTimeField(null=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # "auth.User",
         on_delete=models.CASCADE,
-        # null=True,
         related_name="posts",
     )
 
@@ -31,9 +29,7 @@ class Comment(models.Model):
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # "auth.User",
         on_delete=models.CASCADE,
-        # null=True,
         related_name="comments",
     )
 
@@ -48,12 +44,11 @@ class Reaction(models.Model):
         Post,
         on_delete=models.CASCADE,
         related_name="reactions",
+        # null=True,
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # "auth.User",
         on_delete=models.CASCADE,
-        # null=True,
         related_name="reactions",
     )
 

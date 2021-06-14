@@ -53,7 +53,7 @@ class LoginUserSerializer(TokenObtainPairSerializer):
         return data
 
 
-# TODO: add update / delete logic
+# TODO:
 class ChangeUserPasswordSerializer(ModelSerializer):
     old_password = CharField(required=True, write_only=True)
     new_password = CharField(required=True, write_only=True)

@@ -1,11 +1,6 @@
 from django.db.models import F
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import (
-    AllowAny,
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import Post, Reaction, Comment
 from .serializers import (
@@ -13,14 +8,7 @@ from .serializers import (
     CommentSerializer,
     ReactionSerializer,
 )
-from .permissions import (
-    IsAuthorOrReadOnly,
-    PostPermission,
-    CommentUserPermission,
-    ReactionUserPermission,
-)
-
-from rest_framework.generics import GenericAPIView
+from .permissions import IsAuthorOrReadOnly
 
 
 class PostViewSet(ModelViewSet):
@@ -29,13 +17,10 @@ class PostViewSet(ModelViewSet):
         F("updated").desc(nulls_last=True), "-published"
     )
     serializer_class = PostSerializer
-    # permission_classes = [IsAuthenticatedOrReadOnly]
-    # permission_classes = [AllowAny]
-    # authentication_classes = [JWTAuthentication]
 
 
 class CommentViewSet(ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 

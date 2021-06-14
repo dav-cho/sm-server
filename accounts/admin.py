@@ -16,7 +16,6 @@ class UserAdmin(BaseUserAdmin):
         "is_staff",
         "is_active",
     )
-    # list_filter = ("email", "username")
     fieldsets = (
         (None, {"fields": ("email", "username", "password")}),
         ("Permissions", {"fields": ("is_admin", "is_superuser", "is_staff")}),

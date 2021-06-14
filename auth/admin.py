@@ -1,12 +1,6 @@
 from django.contrib import admin
-from rest_framework_simplejwt.token_blacklist.admin import (
-    OutstandingTokenAdmin,
-    # BlacklistedTokenAdmin,
-)
-from rest_framework_simplejwt.token_blacklist.models import (
-    OutstandingToken,
-    # BlacklistedToken,
-)
+from rest_framework_simplejwt.token_blacklist.admin import OutstandingTokenAdmin
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 
 
 class OutstandingTokenAdmin(OutstandingTokenAdmin):
@@ -16,12 +10,3 @@ class OutstandingTokenAdmin(OutstandingTokenAdmin):
 
 admin.site.unregister(OutstandingToken)
 admin.site.register(OutstandingToken, OutstandingTokenAdmin)
-
-
-# class BlacklistTokenAdmin(BlacklistedTokenAdmin):
-#     def has_delete_permission(self, *args, **kwargs):
-#         return True
-
-
-# admin.site.unregister(BlacklistedToken)
-# admin.site.register(BlacklistedToken, BlacklistTokenAdmin)

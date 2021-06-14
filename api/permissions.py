@@ -1,8 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-from .models import Post, Comment, Reaction
-from .serializers import PostSerializer, CommentSerializer, ReactionSerializer
-
 
 class IsAuthorOrReadOnly(BasePermission):
     message = "Only the author can edit this."
