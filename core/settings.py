@@ -31,7 +31,8 @@ SECRET_KEY = environ["DJANGO_SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if environ["MODE"] == "dev" else False
 
-ALLOWED_HOSTS = ["https://aqueous-depths-23841.herokuapp.com"]
+# ALLOWED_HOSTS = ["https://aqueous-depths-23841.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
