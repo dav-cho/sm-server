@@ -4,17 +4,8 @@ from .models import Post, Comment, Reaction
 from .serializers import PostSerializer, CommentSerializer, ReactionSerializer
 
 
-class IsOwnerOrReadOnly(BasePermission):
-    message = "Only the owner can edit this."
-
-    def has_object_permission(self, req, view, obj):
-        if req.method in SAFE_METHODS:
-            return True
-        return obj.owner == req.user
-
-
-class PostPermission(BasePermission):
-    message = "Base Post Permission"
+class IsAuthorOrReadOnly(BasePermission):
+    message = "Only the author can edit this."
 
     def has_object_permission(self, req, view, obj):
         if req.method in SAFE_METHODS:
@@ -22,8 +13,8 @@ class PostPermission(BasePermission):
         return obj.author == req.user
 
 
-class PostUserPermission(BasePermission):
-    message = "Only the owner can edit this post."
+class PostPermission(BasePermission):
+    message = "Only the author can edit this post."
 
     def has_object_permission(self, req, view, obj):
         if req.method in SAFE_METHODS:
@@ -32,7 +23,7 @@ class PostUserPermission(BasePermission):
 
 
 class CommentUserPermission(BasePermission):
-    message = "Only the owner can edit this comment."
+    message = "Only the author can edit this comment."
 
     def has_object_permission(self, req, view, obj):
         if req.method in SAFE_METHODS:
@@ -41,7 +32,7 @@ class CommentUserPermission(BasePermission):
 
 
 class ReactionUserPermission(BasePermission):
-    message = "Only the owner can edit this reaction."
+    message = "Only the author can edit this reaction."
 
     def has_object_permission(self, req, view, obj):
         if req.method in SAFE_METHODS:

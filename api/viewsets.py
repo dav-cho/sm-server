@@ -1,3 +1,4 @@
+from django.db.models import F
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import (
     AllowAny,
@@ -13,20 +14,23 @@ from .serializers import (
     ReactionSerializer,
 )
 from .permissions import (
-    IsOwnerOrReadOnly,
+    IsAuthorOrReadOnly,
     PostPermission,
-    PostUserPermission,
     CommentUserPermission,
     ReactionUserPermission,
 )
 
+from rest_framework.generics import GenericAPIView
+
 
 class PostViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    queryset = Post.objects.all().order_by(
+        F("updated").desc(nulls_last=True), "-published"
+    )
+    serializer_class = PostSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly]
     # permission_classes = [AllowAny]
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
     # authentication_classes = [JWTAuthentication]
 
 

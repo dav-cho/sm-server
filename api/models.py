@@ -7,6 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=1000)
     published = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(null=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         # "auth.User",

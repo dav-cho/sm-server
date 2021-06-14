@@ -1,13 +1,14 @@
 from django.conf import settings
+from rest_framework import serializers
 from rest_framework.serializers import (
     ModelSerializer,
-    StringRelatedField,
     SlugRelatedField,
     PrimaryKeyRelatedField,
 )
 
 from accounts.models import User
 from .models import Post, Comment, Reaction
+from .mixins import UpdatePostModelMixin
 
 
 class ReactionSerializer(ModelSerializer):
@@ -17,8 +18,6 @@ class ReactionSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
-    # author = PrimaryKeyRelatedField(read_only=True)
-    # author_username = SlugRelatedField(read_only=True)
     author = SlugRelatedField(queryset=User.objects.all(), slug_field="username")
     author_id = PrimaryKeyRelatedField(read_only=True)
 
@@ -35,7 +34,7 @@ class CommentSerializer(ModelSerializer):
         )
 
 
-class PostSerializer(ModelSerializer):
+class PostSerializer(ModelSerializer, UpdatePostModelMixin):
     author = SlugRelatedField(queryset=User.objects.all(), slug_field="username")
     comments = CommentSerializer(many=True, read_only=True)
     reactions = ReactionSerializer(many=True, read_only=True)
@@ -47,6 +46,7 @@ class PostSerializer(ModelSerializer):
             "title",
             "body",
             "published",
+            "updated",
             "author",
             "author_id",
             "comments",
