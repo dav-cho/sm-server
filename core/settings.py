@@ -31,8 +31,7 @@ SECRET_KEY = environ["DJANGO_SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if environ["MODE"] == "dev" else False
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = ["https://aqueous-depths-23841.herokuapp.com"]
 
 # Application definition
 
@@ -149,6 +148,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://localhost:3666",
+    "https://aqueous-depths-23841.herokuapp.com",
 ]
 
 # Rest API
